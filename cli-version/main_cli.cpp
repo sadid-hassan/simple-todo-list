@@ -1,7 +1,29 @@
+/*
+ * File: main_cli.cpp
+ * Project: TodoListGUI
+ * Author: Sadid Hassan
+ * Description:
+ *   Entry point for the To-Do List application. Initializes
+ *   the application window and manages program flow.
+ *
+ * Created: July 2025
+ * Updated: July 2025
+ */
+
+
+
 #include <iostream>
 #include <vector>
 #include <string>
+
 using namespace std;
+
+// Command Characters
+const char VIEW = 'v';
+const char ADD = 'a';
+const char REMOVE = 'r';
+const char EXIT = 'e';
+
 
 void view_tasks(vector<string>& tasks);
 void add_task(vector<string>& tasks);
@@ -9,6 +31,14 @@ void remove_task(vector<string>& tasks);
 
 
 
+
+
+/*
+* @brief Handles the user menu for the To-Do List
+*
+* Continuously prompts the user for an action until they choose to exit.
+* Valid actions include: view, add, remove.
+*/
 int main(){
 
     bool end_program = false;
@@ -29,19 +59,19 @@ int main(){
         }
 
         switch(user_input) {
-            case 'v':
+            case VIEW:
                 cout << "Viewing tasks..." << endl;
                 view_tasks(tasks);
                 break;
-            case 'a':
+            case ADD:
                 cout << "Choosing to add a task..." << endl;
                 add_task(tasks);
                 break;
-            case 'r':
+            case REMOVE:
                 cout << "Choosing to remove a task..." << endl;
                 remove_task(tasks);
                 break;
-            case 'e':
+            case EXIT:
                 cout << "Exiting program..." << endl;
                 end_program = true;
                 break;
@@ -52,6 +82,13 @@ int main(){
     return 0;
 }
 
+
+
+/*
+* @brief Allows user to view the tasks in the To-Do List as a numbered list
+*
+* @param tasks Reference to the list of current tasks
+*/ 
 void view_tasks(vector<string>& tasks){
 
     if(tasks.empty()){
@@ -62,7 +99,7 @@ void view_tasks(vector<string>& tasks){
     cout << "Here are your tasks..." << endl;
     cout << "------------------------" << endl;
 
-    for(int i = 0; i < tasks.size(); i++){
+    for(size_t i = 0; i < tasks.size(); i++){
         cout << i + 1 << ". " << tasks[i] << endl;
     }
 
@@ -70,6 +107,16 @@ void view_tasks(vector<string>& tasks){
 
 }
 
+
+
+/*
+* @brief Adds a task to the To-Do List
+*
+* Prompts the user for a description and appends 
+* the task to the vector
+*
+* @param tasks Reference to the list of current tasks
+*/
 void add_task(vector<string>& tasks){
     string task;
     cout << "Enter a task to add: " << endl;
@@ -80,6 +127,16 @@ void add_task(vector<string>& tasks){
 
 }
 
+
+
+/*
+* @brief Removes a task from the To-Do List
+*
+* Prompts the user to select a number, 
+* and removes that associated task from the list
+*
+* @param tasks Reference to the list of current tasks
+*/
 void remove_task(vector<string>& tasks){
     string task_number;
 
@@ -92,11 +149,19 @@ void remove_task(vector<string>& tasks){
     cout << "Enter what number task to remove: " << endl;
     getline(cin,task_number);
 
-    if(stoi(task_number) > tasks.size()){
+    int index;
+    try{
+        index = stoi(task_number);
+    } catch (...){
+        cout << "Invalid input!" << endl;
+        return;
+    }
+
+    if(index < 1 || index > tasks.size()){
         cout << "Invalid task number!" << endl;
         return;
     } else {
-        tasks.erase(tasks.begin() + ( stoi(task_number) - 1 ) );
+        tasks.erase(tasks.begin() + ( index - 1 ) );
         cout << "Task removed successfully!" << endl;
         return;
     }

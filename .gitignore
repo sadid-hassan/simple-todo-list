@@ -1,2 +1,41 @@
+# Build Artifacts
+/build/
+/gui-version/build/
+/*/build_*/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+CMakeConfigureLog.yaml
+
+# Ninja build files
+*.ninja
+.ninja_deps
+.ninja_log
+
+# Qt specific auto-generated files
+*_autogen/
+*.qrc.dep
+
+# IDE Specific
+.vscode/
+*.code-workspace
+*.user
+*.user.*
+
+# Binaries
 *.exe
-*.vscode/
+*.dll
+*.so
+*.dylib
+*.obj
+*.o
+
+# Logs 
+*.log
+
+# OS Junk
+.DS_Store
+Thumbs.db
